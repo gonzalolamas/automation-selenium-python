@@ -40,14 +40,21 @@ def setup_login_dos():
     f.Click_Mixto("xpath", "//button[@type='submit']", 3)
     print("Entrando al sistema")
     yield
-    print("salida del login")
+    print("Salida del sistema")
     driver.close()
 
 @pytest.mark.usefixtures("setup_login_uno")
 def test_uno():
     print("Entrando al sistema uno")
-    f.Click_Mixto("xpath", "//input[contains(@value,'Planet color')]", 2)
-    f.Click_Mixto("xpath", "//li[contains(.,'Blue')]", 2)
+    f.Click_Mixto("xpath", "//input[contains(@value,'Planet color')]", t)
+    f.Click_Mixto("xpath", "//li[contains(.,'Blue')]", t)
+    f.Click_Mixto("xpath", "(//button[contains(@type,'button')])[3]", t)
+    nombre = driver.find_element(by=By.XPATH, value="//input[contains(@maxlength,'30')]")
+    nombre.send_keys("Gonzalo" + Keys.TAB + "gonzalomaxwell@gmail.com" + Keys.TAB + "456-45-4561" + Keys.TAB + "+14973165459")
+    time.sleep(t)
+    f.Texto_Mixto("xpath", "//input[contains(@name,'promo')]", 6544456, t)
+    f.Click_Mixto("xpath", "//div[contains(@data-react-toolbox,'check')]", 3)
+    #f.Click_Mixto("xpath", "//button[contains(.,'Pay now')]", 2)
 
 @pytest.mark.usefixtures("setup_login_dos")
 def test_dos():
@@ -63,7 +70,7 @@ def test_dos():
     #f.Texto_Mixto("xpath", "(//input[contains(@class,'oxd-input oxd-input--active')])[2]", "col2", t)
     f.Click_Mixto("xpath", "//button[@type='submit'][contains(.,'Search')]", t)
 
-    element = driver.find_element(by=By.XPATH, value="(//div[contains(.,'Gonzalo Gon')])[21]")
+    element = driver.find_element(by=By.XPATH, value="(//div[contains(.,'Gonzalo')])[21]")
     actions = ActionChains(driver)
     actions.move_to_element(element).perform()
     time.sleep(3)
